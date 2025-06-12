@@ -1,8 +1,11 @@
 import './App.css'
 import AccordionUsage from './components/atoms/Accordion';
+import Divider from './components/atoms/Divider';
 import SimpleBadge from './components/atoms/Badge';
 import theme from './config/styles/theme'
 import { Box, Grid, Typography } from "@mui/material";
+import LabeledHeadingWithBadge from './components/atoms/Headings';
+import BasicTabs from './components/atoms/Tabs'; // <-- Correct component
 
 function App() {
   const palettes = theme.palette?.custom;
@@ -10,6 +13,12 @@ function App() {
   if (!palettes) {
     return <Typography>Custom palette not available.</Typography>;
   }
+
+  const tabs = [
+    { label: 'Inbox', count: 99, content: <div>Your inbox messages</div> },
+    { label: 'Drafts', count: 2, content: <div>Saved drafts</div> },
+    { label: 'Sent', count: 12, content: <div>Sent messages</div> },
+  ];
 
   return (
     <>
@@ -35,9 +44,7 @@ function App() {
                       fontSize: 10,
                       color: "#000",
                     }}
-                  >
-                    
-                  </Box>
+                  />
                   {hex}
                 </Grid>
               ))}
@@ -48,9 +55,20 @@ function App() {
         <AccordionUsage />
         <h1>Badge</h1>
         <SimpleBadge />
+        <h2>Divider</h2>
+        <Divider />
+        <h2>Reusable Tabs Example</h2>
+        <BasicTabs tabs={tabs} />
+        <Box>
+          <h2>Headings</h2>
+          <LabeledHeadingWithBadge
+            heading="Hivemind"
+          />
+        </Box>
+
       </Grid>
     </>
   )
 }
 
-export default App
+export default App;
