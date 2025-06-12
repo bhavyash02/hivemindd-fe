@@ -1,33 +1,54 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import AccordionUsage from './components/atoms/Accordion';
+import SimpleBadge from './components/atoms/Badge';
+import theme from './config/styles/theme'
+import { Box, Grid, Typography } from "@mui/material";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const palettes = theme.palette?.custom;
+
+  if (!palettes) {
+    return <Typography>Custom palette not available.</Typography>;
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Grid container spacing={2}>
+        {Object.entries(palettes).map(([groupName, shades]) => (
+          <Grid key={groupName}>
+            <Typography fontWeight={600} textTransform="capitalize" mb={1}>
+              {groupName}
+            </Typography>
+            <Grid container spacing={1}>
+              {Object.entries(shades).map(([shade, hex]) => (
+                <Grid key={shade}>
+                  <Box
+                    sx={{
+                      backgroundColor: hex,
+                      height: 70,
+                      width: 100,
+                      borderRadius: "4px",
+                      border: "1px solid #ccc",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 10,
+                      color: "#000",
+                    }}
+                  >
+                    
+                  </Box>
+                  {hex}
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        ))}
+        <h1>Accordion</h1>
+        <AccordionUsage />
+        <h1>Badge</h1>
+        <SimpleBadge />
+      </Grid>
     </>
   )
 }
