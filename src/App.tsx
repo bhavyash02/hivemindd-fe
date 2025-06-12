@@ -6,6 +6,7 @@ import theme from './config/styles/theme'
 import { Box, Grid, Typography } from "@mui/material";
 import LabeledHeadingWithBadge from './components/atoms/Headings';
 import BasicTabs from './components/atoms/Tabs'; // <-- Correct component
+import Buttons from './components/atoms/Buttons';
 
 function App() {
   const palettes = theme.palette?.custom;
@@ -64,6 +65,8 @@ function App() {
           <LabeledHeadingWithBadge
             heading="Hivemind"
           />
+
+          <Buttons />
         </Box>
 
       </Grid>
