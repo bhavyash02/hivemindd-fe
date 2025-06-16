@@ -23,7 +23,7 @@ import ControlledCheckbox from '../components/atoms/CheckBox';
 import CustomRadioGroup from '../components/atoms/RadioButton';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CustomSwitch from '../components/atoms/Switch';
-import { Box, Grid, Typography, Stack, Button } from "@mui/material";
+import { Box, Grid, Stack, Button } from "@mui/material";
 
 
 export function Components() {
@@ -35,10 +35,6 @@ export function Components() {
     const [notifications, setNotifications] = useState(false)
 
     const palettes = theme.palette?.custom;
-
-    if (!palettes) {
-        return <Typography>Custom palette not available.</Typography>;
-    }
 
     const tabs = [
         { label: 'Inbox', count: 99, content: <div>Your inbox messages</div> },
@@ -66,9 +62,6 @@ export function Components() {
             <Grid container spacing={2}>
                 {Object.entries(palettes).map(([groupName, shades]) => (
                     <Grid key={groupName}>
-                        <Typography fontWeight={600} textTransform="capitalize" mb={1}>
-                            {groupName}
-                        </Typography>
                         <Grid container spacing={1}>
                             {Object.entries(shades).map(([shade, hex]) => (
                                 <Grid key={shade}>
@@ -88,13 +81,14 @@ export function Components() {
                                     />
                                     {hex}
                                 </Grid>
+                                
                             ))}
                         </Grid>
                     </Grid>
                 ))}
                 <h1>Accordion</h1>
                 <AccordionUsage />
-                <h1>Badge</h1>
+                <h2>Badge</h2>
                 <SimpleBadge />
                 <h2>Divider</h2>
                 <DividerText />
