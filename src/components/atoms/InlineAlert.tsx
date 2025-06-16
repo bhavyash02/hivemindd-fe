@@ -50,7 +50,7 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
                     <IconButton
                         size="small"
                         onClick={onClose as React.MouseEventHandler<HTMLButtonElement>}
-                        sx={{ color: titleColor }}
+                        sx={{ color: titleColor, display: "flex", alignItems: "center", alignSelf: 'center', mt:'10px' }}
                     >
                         <CloseIcon fontSize="small" />
                     </IconButton>

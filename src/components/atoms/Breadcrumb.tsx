@@ -60,7 +60,7 @@ const CustomBreadcrumbs: React.FC<CustomBreadcrumbsProps> = ({ items }) => {
 
                 if (state === 'disabled') {
                     return (
-                        <Typography key={index} sx={{ ...baseSx, ...breadcrumbTextSx }}>
+                        <Typography component="span" key={index} sx={{ ...baseSx, ...breadcrumbTextSx }}>
                             <IconBox color={iconColor} />
                             {label}
                         </Typography>
