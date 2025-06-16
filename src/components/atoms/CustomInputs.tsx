@@ -7,31 +7,23 @@ import {
     styled,
 } from '@mui/material';
 
-// Outer glowing border container
-const StyledInputBox = styled(Box)(({ theme }) => ({
-    position: 'relative',
-    borderRadius: '8px',
-    padding: '2px',
-    background: 'linear-gradient(90deg, #B2A7FF, #A6A3FC)',
+interface CustomInputProps {
+    label?: string;
+    placeholder?: string;
+    helperText?: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    variant?: 'box' | 'line'; // NEW PROP
+}
 
-    '&:focus-within': {
-        background: 'linear-gradient(90deg, #0D04F5, #4A3CFF)',
-    },
-}));
-
-// Inner white box
-const InnerBox = styled(Box)(({ theme }) => ({
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    borderRadius: '6px',
-    backgroundColor: '#fff',
-    padding: '8px 12px',
-}));
-
-// Left icon placeholder
 const LeftIcon = styled(Box)({
+    width: 27,
+    height: 24,
+    borderRadius: 4,
+    backgroundColor: '#D9D9D9',
+    marginRight: 8,
+});
+const RightIcon = styled(Box)({
     width: 24,
     height: 24,
     borderRadius: 4,
@@ -39,14 +31,12 @@ const LeftIcon = styled(Box)({
     marginRight: 8,
 });
 
-// Add-ons container
 const RightAddOns = styled(Box)({
     display: 'flex',
     alignItems: 'center',
     gap: 8,
 });
 
-// VISA badge box
 const VisaBox = styled(Box)({
     width: '34px',
     height: '24px',
@@ -55,7 +45,6 @@ const VisaBox = styled(Box)({
     justifyContent: 'center',
 });
 
-// VISA SVG with updated fill color
 const VisaSVG = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="34" height="24" viewBox="0 0 34 24" fill="none">
         <rect x="0.5" y="0.5" width="33" height="23" rx="3.5" fill="white" />
@@ -69,30 +58,64 @@ const VisaSVG = () => (
     </svg>
 );
 
-// Main component
-const CustomInputWithAddOns = () => {
+const CustomInput: React.FC<CustomInputProps> = ({
+    label,
+    placeholder = 'Placeholder',
+    helperText,
+    value,
+    onChange,
+    variant = 'box',
+}) => {
     return (
         <Stack spacing={1} width={400}>
-            <Box sx ={{ display: 'flex', alignItems: 'left'}}>
-            {/* Label */}
-            <Typography
-                sx={{
-                    color: 'var(--neutral-900-main, #111)',
-                    fontFamily: 'var(--Font, Inter)',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
-                    fontWeight: 600,
-                    lineHeight: '20px',
-                }}
+            {label && (
+                <Box>
+                    <Typography
+                        sx={{
+                            color: 'var(--neutral-900-main, #111)',
+                            fontFamily: 'var(--Font, Inter)',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                            lineHeight: '20px',
+                            alignItems: 'flex-start',
+                            display: 'flex',
+                        }}
+                    >
+                        {label}
+                    </Typography>
+                </Box>
+            )}
+            <Box
+                sx={
+                    variant === 'box'
+                        ? {
+                            position: 'relative',
+                            borderRadius: '8px',
+                            padding: '2px',
+                            background: 'linear-gradient(90deg, #B2A7FF, #A6A3FC)',
+                            '&:focus-within': {
+                                background: 'linear-gradient(90deg, #0D04F5, #4A3CFF)',
+                            },
+                        }
+                        : {
+                            borderBottom: '1px solid var(--Primary-300, #B2A7FF)',
+                            '&:focus-within': {
+                                borderBottom: '1px solid var(--Primary-600, #4A3CFF)',
+                            },
+                        }
+                }
             >
-                Label
-            </Typography>
-            </Box>
-
-            {/* Input with Add-ons */}
-            <StyledInputBox>
-                <InnerBox>
-                    {/* Left section */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        borderRadius: variant === 'box' ? '6px' : 0,
+                        backgroundColor: '#fff',
+                        padding: '8px 12px',
+                    }}
+                >
                     <Box
                         sx={{
                             display: 'flex',
@@ -103,22 +126,23 @@ const CustomInputWithAddOns = () => {
                     >
                         <LeftIcon />
                         <InputBase
-                            placeholder="Placeholder"
+                            placeholder={placeholder}
                             fullWidth
+                            value={value}
+                            onChange={onChange}
                             sx={{
                                 fontSize: '14px',
                                 fontWeight: 400,
                                 lineHeight: '20px',
                                 fontFamily: 'var(--Font, Inter)',
-                                color: 'var(--Neutral-400, #A3A3A3)',
+                                color: 'var(--neutral-900-main, #111)',
                                 '&::placeholder': {
-                                    color: 'var(--Neutral-400, #A3A3A3)',
+                                    color: 'var(--Neutral-600, #A3A3A3)',
                                 },
                             }}
                         />
                     </Box>
 
-                    {/* Right section */}
                     <RightAddOns>
                         <Typography
                             sx={{
@@ -131,32 +155,31 @@ const CustomInputWithAddOns = () => {
                         >
                             Add-on
                         </Typography>
-                        <LeftIcon />
+                        <RightIcon />
                         <VisaBox>
                             <VisaSVG />
                         </VisaBox>
                     </RightAddOns>
-                </InnerBox>
-            </StyledInputBox>
-
-            {/* Helper text */}
-            <Box sx ={{ display: 'flex', alignItems: 'left'}}>
-            <Typography
-                sx={{
-                    color: 'var(--Neutral-600, #525252)',
-                    // fontFamily: 'var(--Font, Inter)',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
-                    fontWeight: 400,
-                    lineHeight: '20px',
-                    alignSelf: 'stretch',
-                }}
-            >
-                Helper text
-            </Typography>
+                </Box>
             </Box>
+
+            {helperText && (
+                <Typography
+                    sx={{
+                        color: 'var(--Neutral-600, #525252)',
+                        fontSize: '14px',
+                        fontWeight: 400,
+                        lineHeight: '20px',
+                        alignSelf: 'stretch',
+                        alignItems: 'flex-start',
+                        display: 'flex',
+                    }}
+                >
+                    {helperText}
+                </Typography>
+            )}
         </Stack>
     );
 };
 
-export default CustomInputWithAddOns;
+export default CustomInput;
