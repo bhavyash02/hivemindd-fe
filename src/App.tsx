@@ -3,11 +3,19 @@ import AccordionUsage from './components/atoms/Accordion';
 import Divider from './components/atoms/Divider';
 import SimpleBadge from './components/atoms/Badge';
 import theme from './config/styles/theme'
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Stack } from "@mui/material";
 import LabeledHeadingWithBadge from './components/atoms/Headings';
 import BasicTabs from './components/atoms/Tabs'; // <-- Correct component
 import Buttons from './components/atoms/Buttons';
 import LoaderBox from './components/atoms/Loader';
+import { StickyAlert } from './components/atoms/StickyAlert';
+import { CustomIconButton } from './components/atoms/CustomButtonGroup';
+import CustomBreadcrumbs from './components/atoms/Breadcrumb';
+import type { BreadcrumbItem } from './components/atoms/Breadcrumb';
+import SidebarNavItem from './components/atoms/SidebarNavigation';
+import CustomPagination from './components/atoms/PaginationSample';
+import CustomAlert from './components/atoms/InlineAlert';
+import CustomInputWithAddOns from './components/atoms/CustomInputs';
 
 function App() {
   const palettes = theme.palette?.custom;
@@ -20,6 +28,20 @@ function App() {
     { label: 'Inbox', count: 99, content: <div>Your inbox messages</div> },
     { label: 'Drafts', count: 2, content: <div>Saved drafts</div> },
     { label: 'Sent', count: 12, content: <div>Sent messages</div> },
+  ];
+  const states: ('default' | 'hover' | 'pressed' | 'active' | 'disabled')[] = [
+    'default',
+    'hover',
+    'pressed',
+    'active',
+    'disabled',
+  ];
+
+  const items: BreadcrumbItem[] = [
+    { label: 'Home', href: '#', state: 'default' },
+    { label: 'Section', href: '#', state: 'active' },
+    { label: 'Subsection', href: '#', state: 'hover' },
+    { label: 'Final', state: 'disabled' },
   ];
 
   return (
@@ -73,6 +95,56 @@ function App() {
             <h2>Loader</h2>
             <LoaderBox showSmall showMedium showLarge showXl />
           </Box>
+          <Box>
+            <h2>Sticky Alert</h2>
+            <StickyAlert
+              alignment="left"
+              message="This is a center-aligned alert."
+              buttons={['Label', 'Label']}
+              color={theme.palette.primary.main}
+            />
+          </Box>
+          <Stack spacing={5} sx={{ marginTop: 5 }}>
+            <h2>Button Group</h2>
+            {states.map((state, rowIndex) => (
+              <Stack direction="row" spacing={2} key={rowIndex}>
+                <CustomIconButton label="Label" state={state} />
+                <CustomIconButton label="Label" state={state} />
+                <CustomIconButton label="Label" state={state} />
+              </Stack>
+            ))}
+          </Stack>
+          <Stack spacing={5} sx={{ marginTop: 5 }}>
+            <h2>Bread Crumbs</h2>
+            <CustomBreadcrumbs items={items} />
+          </Stack>
+          <Stack>
+            <h2>Sidebar Navigation</h2>
+            <SidebarNavItem label="Label" count={0} color={theme.palette.primary.main} />
+          </Stack>
+          <Stack spacing={5} sx={{ marginTop: 5 }}>
+            <h2>Pagination</h2>
+            <CustomPagination count={5} disabledPages={[5]} />
+          </Stack>
+          <Stack spacing={5} sx={{ marginTop: 5 }}>
+            <h2>Inline Alert</h2>
+            <CustomAlert
+              title="Alert line which displays the main function or reason of the alert."
+              description="Become a legendary UX/UI designer through real world and practical courses."
+              actions={['Action', 'Action']}
+              backgroundColor={theme.palette.custom.primaryBlue[100]}
+              borderColor={theme.palette.primary.main}
+              iconColor={theme.palette.custom.primaryBlue[200]}
+              titleColor="var(--Primary-Blue-700, #0903AE)"
+              textColor="var(--Primary-Blue-700, #0903AE)"
+              onClose={() => console.log('Alert closed')}
+            />
+
+          </Stack>
+          <Stack spacing={5} sx={{ marginTop: 5 }}>
+            <h2>Custom Input with Add-Ons</h2>  
+            <CustomInputWithAddOns />
+          </Stack>
         </Box>
 
       </Grid>
