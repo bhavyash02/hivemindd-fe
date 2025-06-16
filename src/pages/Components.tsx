@@ -16,11 +16,23 @@ import SidebarNavItem from '../components/atoms/SidebarNavigation';
 import CustomPagination from '../components/atoms/PaginationSample';
 import CustomAlert from '../components/atoms/InlineAlert';
 import CustomInput from '../components/atoms/CustomInputs';
-import { Box, Grid, Typography, Stack } from "@mui/material";
+import DynamicModal from '../components/atoms/Modal';
+import DynamicModalSmallButtons from '../components/atoms/DynamicSmallButtons';
+import StatsCard from '../components/atoms/StatsCard';
+import ControlledCheckbox from '../components/atoms/CheckBox';
+import CustomRadioGroup from '../components/atoms/RadioButton';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import CustomSwitch from '../components/atoms/Switch';
+import { Box, Grid, Typography, Stack, Button } from "@mui/material";
 
 
 export function Components() {
     const [inputValue, setInputValue] = useState('');
+    const [openOne, setOpenOne] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const [selectedGender, setSelectedGender] = useState('female');
+    const [notifications, setNotifications] = useState(false)
 
     const palettes = theme.palette?.custom;
 
@@ -154,6 +166,151 @@ export function Components() {
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             variant="box"// box or line
+                        />
+                    </Stack>
+                    <Stack spacing={5} sx={{ marginTop: 5 }}>
+                        <h2>Modal</h2>
+                        <Button
+                            variant="contained"
+                            onClick={() => setOpenOne(true)}
+                            sx={{
+                                bgcolor: theme.palette.custom.primaryBlue[500],
+                                width: "400px",
+                            }}
+                        >
+                            Open Modal with Primary Bottom with Full Size Button
+                        </Button>
+                        {/* Modal 1: Primary button below */}
+                        <DynamicModal
+                            open={openOne}
+                            onClose={() => setOpenOne(false)}
+                            avatarIcon={
+                                <Box component="span" sx={{ fontSize: 28 }}>
+                                    ▣
+                                </Box>
+                            }
+                            title="A short modal heading"
+                            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore."
+                            buttons={[
+                                {
+                                    label: "Action",
+                                    variant: "outlined",
+                                    onClick: () => alert("Outlined clicked"),
+                                    startIcon: <HelpOutlineIcon />,
+                                    endIcon: <HelpOutlineIcon />,
+                                },
+                                {
+                                    label: "Action",
+                                    variant: "contained",
+                                    onClick: () => alert("Contained clicked"),
+                                    startIcon: <HelpOutlineIcon />,
+                                    endIcon: <HelpOutlineIcon />,
+                                },
+                            ]}
+                        />
+
+                        {/* Modal with Small Buttons */}
+                        <Button
+                            variant="contained"
+                            onClick={() => setOpen(true)}
+                            sx={{
+                                bgcolor: theme.palette.custom.primaryBlue[500],
+                                width: "200px",
+                            }}
+                        >
+                            Open Modal
+                        </Button>
+
+                        <DynamicModalSmallButtons
+                            open={open}
+                            onClose={() => setOpen(false)}
+                            icon={
+                                <Box component="span" sx={{ fontSize: 28 }}>
+                                    ▣
+                                </Box>
+                            }
+                            title="A short modal heading"
+                            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur amet labore."
+                            reverseButtons={false} // set to true if you want primary on top
+                            buttons={[
+                                {
+                                    label: "Action",
+                                    variant: "outlined",
+                                    startIcon: <HelpOutlineIcon />,
+                                    endIcon: <HelpOutlineIcon />,
+                                    onClick: () => alert("Outlined clicked"),
+                                },
+                                {
+                                    label: "Action",
+                                    variant: "contained",
+                                    color: "primary",
+                                    startIcon: <HelpOutlineIcon />,
+                                    endIcon: <HelpOutlineIcon />,
+                                    onClick: () => alert("Contained clicked"),
+                                },
+                            ]}
+                        />
+                    </Stack>
+
+                    {/* Stats Card */}
+                    <Stack spacing={5} sx={{ marginTop: 5 }}>
+                        <h2>Custom Input with Add-Ons</h2>
+                        <Stack spacing={3} sx={{ p: 4 }}>
+                            <StatsCard
+                                icon={
+                                    <Box component="span" sx={{ fontSize: 28 }}>
+                                        ▣
+                                    </Box>
+                                }
+                                overline="Overline"
+                                label="Label"
+                                description="Description"
+                                percentage="00%"
+                            />
+                            <StatsCard
+                                icon={
+                                    <Box component="span" sx={{ fontSize: 28 }}>
+                                        ▣
+                                    </Box>
+                                }
+                                overline="Overline"
+                                label="Label"
+                                description="Description"
+                                percentage="00%"
+                            />
+                        </Stack>
+                    </Stack>
+
+                    <Stack spacing={5} sx={{ marginTop: 5 }}>
+                        <h2>Custom Check Box</h2>
+                        <ControlledCheckbox
+                            label="Accept Terms"
+                            checked={isChecked}
+                            onChange={setIsChecked}
+                        />
+                    </Stack>
+
+                    <Stack spacing={5}>
+                        <h2>Radio Group</h2>
+                        <CustomRadioGroup
+                            label="Gender"
+                            name="gender"
+                            value={selectedGender}
+                            onChange={setSelectedGender}
+                            options={[
+                                { value: 'female', label: 'Female' },
+                                { value: 'male', label: 'Male' },
+                                { value: 'other', label: 'Other' },
+                            ]}
+                        />
+                    </Stack>
+
+                    <Stack spacing={5}>
+                        <h2>Switch</h2>
+                        <CustomSwitch
+                            label="Enable Notifications"
+                            checked={notifications}
+                            onChange={setNotifications}
                         />
                     </Stack>
                 </Box>
