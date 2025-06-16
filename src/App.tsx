@@ -1,8 +1,8 @@
-import { RouterProvider, createHashRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { appRoutes } from "./config/appRoutesConfig";
 
 function App() {
-  const router = createHashRouter(appRoutes);
+  const router = createBrowserRouter(appRoutes);
 
   return (
     <>
